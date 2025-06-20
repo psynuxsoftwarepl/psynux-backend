@@ -18,18 +18,22 @@ const prismaClient_1 = require("../database/prismaClient");
 class AuthService {
     static verifyFirebaseAndHandleUser(idToken) {
         return __awaiter(this, void 0, void 0, function* () {
-            const decoded = yield firebase_1.default.auth().verifyIdToken(idToken);
-            const { uid, phone_number } = decoded;
-            if (!phone_number)
-                throw new Error('Invalid phone number');
-            let user = yield prismaClient_1.prisma.user.findUnique({ where: { firebaseUid: uid } });
+            const decodedToken = yield firebase_1.default.auth().verifyIdToken(idToken);
+            const { uid, phone_number } = decodedToken;
+            if (!phone_number) {
+                throw new Error('Phone number not found in token');
+            }
+            // Look up user by Firebase UID or phone
+            let user = yield prismaClient_1.prisma.user.findUnique({
+                where: { phone: phone_number }
+            });
+            // If not found, create user
             if (!user) {
                 user = yield prismaClient_1.prisma.user.create({
                     data: {
                         firebaseUid: uid,
-                        phoneNumber: phone_number,
-                        role: 'USER'
-                    }
+                        phone: phone_number,
+                    },
                 });
             }
             return user;

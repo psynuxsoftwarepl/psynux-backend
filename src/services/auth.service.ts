@@ -3,21 +3,28 @@ import { prisma } from '../database/prismaClient';
 
 export class AuthService {
   static async verifyFirebaseAndHandleUser(idToken: string) {
-    const decoded = await admin.auth().verifyIdToken(idToken);
-    const { uid, phone_number } = decoded;
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const { uid, phone_number } = decodedToken;
 
-    if (!phone_number) throw new Error('Invalid phone number');
+    if (!phone_number) {
+      throw new Error('Phone number not found in token');
+    }
 
-    let user = await prisma.user.findUnique({ where: { firebaseUid: uid } });
+    // Look up user by Firebase UID or phone
+    let user = await prisma.user.findUnique({
+      where: { phone: phone_number }
+    });
+
+    // If not found, create user
     if (!user) {
       user = await prisma.user.create({
         data: {
           firebaseUid: uid,
-          phoneNumber: phone_number,
-          role: 'USER'
-        }
+          phone: phone_number,
+        },
       });
     }
+
     return user;
   }
 }

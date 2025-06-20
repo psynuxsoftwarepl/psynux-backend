@@ -1,18 +1,23 @@
 import { Request, Response, NextFunction } from 'express';
 import admin from '../config/firebase';
 
-export async function verifyFirebaseToken(req: Request, res: Response, next: NextFunction): Promise<void> {
+export const verifyFirebaseToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   const token = req.headers.authorization?.split('Bearer ')[1];
+
   if (!token) {
-    res.status(401).json({ error: 'Unauthorized' });
+    res.status(401).json({ error: 'Missing token' });
     return;
   }
 
   try {
-    const decoded = await admin.auth().verifyIdToken(token);
-    (req as any).user = decoded;
+    const decodedToken = await admin.auth().verifyIdToken(token);
+    (req as any).user = decodedToken; // Cast to any or extend Request type
     next();
-  } catch (error) {
-    res.status(401).json({ error: 'Invalid token' });
+  } catch (err) {
+    res.status(403).json({ error: 'Invalid token' });
   }
-}
+};

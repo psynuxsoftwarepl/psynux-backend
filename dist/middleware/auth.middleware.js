@@ -12,23 +12,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verifyFirebaseToken = verifyFirebaseToken;
+exports.verifyFirebaseToken = void 0;
 const firebase_1 = __importDefault(require("../config/firebase"));
-function verifyFirebaseToken(req, res, next) {
-    return __awaiter(this, void 0, void 0, function* () {
-        var _a;
-        const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split('Bearer ')[1];
-        if (!token) {
-            res.status(401).json({ error: 'Unauthorized' });
-            return;
-        }
-        try {
-            const decoded = yield firebase_1.default.auth().verifyIdToken(token);
-            req.user = decoded;
-            next();
-        }
-        catch (error) {
-            res.status(401).json({ error: 'Invalid token' });
-        }
-    });
-}
+const verifyFirebaseToken = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split('Bearer ')[1];
+    if (!token) {
+        res.status(401).json({ error: 'Missing token' });
+        return;
+    }
+    try {
+        const decodedToken = yield firebase_1.default.auth().verifyIdToken(token);
+        req.user = decodedToken; // Cast to any or extend Request type
+        next();
+    }
+    catch (err) {
+        res.status(403).json({ error: 'Invalid token' });
+    }
+});
+exports.verifyFirebaseToken = verifyFirebaseToken;

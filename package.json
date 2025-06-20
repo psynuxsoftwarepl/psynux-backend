@@ -1,48 +1,42 @@
 {
   "name": "psynux-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs",
-    "test": "tests"
-  },
+  "description": "Backend for Psynux Vehicle Rental using TypeScript, Express, Prisma, and Firebase",
+  "main": "dist/index.js",
   "scripts": {
-  "dev": "ts-node-dev src/index.ts",
-  "build": "tsc",
-  "start": "node dist/index.js",
-  "prisma:generate": "prisma generate",
-  "prisma:migrate": "prisma migrate deploy"
-
-
-},
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate deploy",
+    "prisma:studio": "prisma studio"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rkb3004/psynux-backend.git"
+    "url": "https://github.com/psynuxsoftwarepl/psynux-backend.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["express", "firebase", "prisma", "typescript", "backend", "vehicle-rental"],
+  "author": "Rohan Kumar Behera",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rkb3004/psynux-backend/issues"
+    "url": "https://github.com/psynuxsoftwarepl/psynux-backend/issues"
   },
-  "homepage": "https://github.com/rkb3004/psynux-backend#readme",
+  "homepage": "https://github.com/psynuxsoftwarepl/psynux-backend#readme",
   "dependencies": {
     "@prisma/client": "^6.10.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "firebase-admin": "^13.4.0",
-    "morgan": "^1.10.0",
-    "prisma": "^6.10.0",
-    "typescript": "^5.8.3"
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.0.3",
-    "nodemon": "^3.1.10",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
   }
 }

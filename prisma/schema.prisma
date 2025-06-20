@@ -8,17 +8,16 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  name      String
-  email     String    @unique
-  phone     String?   @unique
-  password  String?
-  firebaseUid String? @unique
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id          String    @id @default(uuid())
+  phone       String    @unique          
+  firebaseUid String    @unique          
+  name        String?                    // Optional
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
-  bookings  Booking[]
+  bookings    Booking[]
 }
+
 
 model Vehicle {
   id        String    @id @default(uuid())

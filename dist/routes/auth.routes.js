@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const auth_controller_1 = require("../controllers/auth.controller");
+const asyncHandler_1 = require("../utils/asyncHandler");
 const router = (0, express_1.Router)();
-router.post('/login', auth_controller_1.AuthController.loginOrRegister);
+router.post('/login', (0, asyncHandler_1.asyncHandler)(auth_controller_1.AuthController.loginOrRegister));
 exports.default = router;

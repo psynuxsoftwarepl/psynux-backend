@@ -1,8 +1,22 @@
 import app from './app';
-import { env } from './config/env';
+import { PrismaClient } from '@prisma/client';
+import dotenv from 'dotenv';
 
-const PORT = env.PORT;
+dotenv.config();
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
+const prisma = new PrismaClient();
+const PORT = process.env.PORT || 3000;
+
+async function startServer() {
+  try {
+    app.listen(PORT, () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    await prisma.$disconnect();
+    process.exit(1);
+  }
+}
+
+startServer();
