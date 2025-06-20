@@ -15,7 +15,14 @@
     "type": "git",
     "url": "https://github.com/psynuxsoftwarepl/psynux-backend.git"
   },
-  "keywords": ["express", "firebase", "prisma", "typescript", "backend", "vehicle-rental"],
+  "keywords": [
+    "express",
+    "firebase",
+    "prisma",
+    "typescript",
+    "backend",
+    "vehicle-rental"
+  ],
   "author": "Rohan Kumar Behera",
   "license": "ISC",
   "bugs": {
@@ -23,7 +30,7 @@
   },
   "homepage": "https://github.com/psynuxsoftwarepl/psynux-backend#readme",
   "dependencies": {
-    "@prisma/client": "^6.10.0",
+    "@prisma/client": "^6.10.1",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
