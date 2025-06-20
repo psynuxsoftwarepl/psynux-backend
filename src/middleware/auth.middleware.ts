@@ -15,9 +15,10 @@ export const verifyFirebaseToken = async (
 
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
-    (req as any).user = decodedToken; // Cast to any or extend Request type
-    next();
+    (req as any).user = decodedToken;
+    return next(); // ✅ just call next(), don't return a value
   } catch (err) {
     res.status(403).json({ error: 'Invalid token' });
+    return; // ✅ return void
   }
 };

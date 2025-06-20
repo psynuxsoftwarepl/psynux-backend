@@ -23,11 +23,12 @@ const verifyFirebaseToken = (req, res, next) => __awaiter(void 0, void 0, void 0
     }
     try {
         const decodedToken = yield firebase_1.default.auth().verifyIdToken(token);
-        req.user = decodedToken; // Cast to any or extend Request type
-        next();
+        req.user = decodedToken;
+        return next(); // ✅ just call next(), don't return a value
     }
     catch (err) {
         res.status(403).json({ error: 'Invalid token' });
+        return; // ✅ return void
     }
 });
 exports.verifyFirebaseToken = verifyFirebaseToken;

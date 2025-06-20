@@ -22,7 +22,7 @@ function startServer() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             app_1.default.listen(PORT, () => {
-                console.log(`✅ Server running on http://localhost:${PORT}`);
+                console.log(`Server running on http://localhost:${PORT}`);
             });
         }
         catch (error) {
